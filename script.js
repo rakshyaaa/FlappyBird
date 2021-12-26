@@ -2,13 +2,13 @@ const img = new Image();
 img.src = "images/sprite.png";
 
 img.onload = () => {
-    //console.log('loaded')
     main();
 }
 
+var gameScore = 0;
+
 // var game = false;
 // var flag = false;
-var gameScore = 0;
 // console.log(img.src);
 // console.log(game);
 
@@ -17,9 +17,15 @@ var ctx = canvas.getContext("2d");
 const speed = 0.5;
 
 
-
 let lowerPipes = [];
 let upperPipes = [];
+
+function generatePipes() {
+    for(let i = 0 ; i < 10 ; i++) {
+        lowerPipes.push(new LowerPipe(ctx, i));
+        upperPipes.push(new UpperPipe(ctx, i));
+    }
+}
 
 
 class Game {
@@ -54,13 +60,6 @@ class Game {
         
     }
 
-    // game. ();
-    // game.play();
-    reset() {
-        this.p.reset();
-        this.ready();
-    }
-
     gameOver() {
         this.bg.renderGameOver();
         //this.state = "init";
@@ -79,7 +78,7 @@ class Game {
 
             case "over":
                 this.gameOver();
-                this.ready();
+                //this.ready();
                 break;
 
             default:
@@ -87,7 +86,6 @@ class Game {
         }
     }
 }
-
 
 class UpperPipe {
     constructor(ctx, index) {
@@ -155,19 +153,14 @@ class LowerPipe {
 
 }
 
-function generatePipes() {
-    for(let i = 0 ; i < 10 ; i++) {
-        lowerPipes.push(new LowerPipe(ctx, i));
-        upperPipes.push(new UpperPipe(ctx, i));
-    }
-}
+
 
 class Player {
     constructor(ctx, color) {
         // this.x = Math.floor(Math.random()*100);
         // this.y = Math.floor(Math.random()*100);
-        this.x = 2000;
-        this.y = 2000;
+        this.x = 60;
+        this.y = 90;
         this.dx = 1;
         this.dy = 1;
         this.ctx = ctx;
@@ -240,6 +233,7 @@ function checkCollision(pipesLower, pipesUpper, playerFlappy){
             if(cordsFlappy.y >= cordsP.y && cordsP.y+ cordsP.h >= cordsFlappy.y){
                 console.log("Upper Collision " + " Game Over")
                 g.state = "over";
+                console.log(g.p.getCordinates());
                 //flag = true;
 
             }
@@ -252,6 +246,7 @@ function checkCollision(pipesLower, pipesUpper, playerFlappy){
             if(cordsFlappy.y >= cordsP.y && cordsFlappy.y + 18 >= cordsP.y){
                 console.log("Lower Collision" + " Game Over");
                 g.state = "over";
+                console.log(g.p.getCordinates());
                 //flag = true;
             }
         }
@@ -275,7 +270,6 @@ function main(){
     requestAnimationFrame(main);    
 }
 
-//main();
 
 
 
@@ -289,7 +283,7 @@ document.addEventListener('keydown' || 'keypress', (e) => {
         if (e.keyCode === 87 || e.keyCode === 32 || e.keyCode === 38 ) {
             console.log("pressed");
             g.p.jump();  
-            g.p.update();
+            //g.p.update();
         }
         else {
             console.log(e.keyCode);

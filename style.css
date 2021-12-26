@@ -11,5 +11,16 @@ body {
     height: 500px;
     width: 800px;
     border: 2px solid black;
-    margin: 50px 50px;
+    margin: 0px 50px;
 }
+
+#gameHead {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* #scoreBar {
+    display: flex;
+    flex-direction: row;
+} */
